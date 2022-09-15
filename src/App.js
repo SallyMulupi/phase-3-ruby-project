@@ -4,23 +4,49 @@ function App() {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
 
+  const getEvents = () => {
+    fetch("http://localhost:9292/events")
+      .then((res) => res.json())
+      .then((events) => setEvents(events));
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  // console.log(events);
+
+  // const getUsers = () => {
+  //   fetch("http://localhost:9292/users")
+  //     .then((res) => res.json())
+  //     .then((users_data) => setUsers(users_data));
+  // };
+
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
+
+  // console.log(users);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <Popup></Popup> */}
+      {/* <SignInForm /> */}
+      <Routes>
+        <Route exact path="/" element={<Home events={events} />} />
+        <Route path="/userprofile" element={<UserProfile users={users} />} />
+        <Route
+          path="/events/:id"
+          element={<EventReviewPage events={events} />}
+        />
+        <Route
+          path="/eventreviewpage"
+          element={<EventReviewPage events={events} />}
+        />
+        <Route path="/help" element={<Help />} />
+        <Route path="/reviews/:id" element={<Reviews />} />
+      </Routes>
+    </>
   );
 }
 
